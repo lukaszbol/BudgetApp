@@ -37,6 +37,7 @@ The repository consists of:
 - application - JavaScript file containing the application's logic
 - style - CSS file setting the application's visual look
 - images - pictures used in the application
+- applicationPictures - screenshots of a running application
 
 
 ## 4. What Went Wrong
