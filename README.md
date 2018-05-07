@@ -1,4 +1,4 @@
-# BudgetApp
+# Budget App
 
 ## Contents
 

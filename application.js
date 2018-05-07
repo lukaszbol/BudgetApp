@@ -7,13 +7,13 @@ var budgetController = (function(){
         this.id = id;
         this.description = description;
         this.value = value
-    }
+    };
     
     var Income = function(id, description, value){
         this.id = id;
         this.description = description;
         this.value = value
-    }
+    };
     
     // DATA STRUCTURE for keeping all expenses, incomes, etc.
     var data = {        // Object containing all data
@@ -22,8 +22,40 @@ var budgetController = (function(){
             inc: []
         },
         totals: {       // Object containing totals
-            exp: 0;
+            exp: 0,
             inc: 0
+        }
+    };
+    
+    return {
+        addItem: function(type, description, value){
+            var newItem, ID;
+            
+            // ID = last ID + 1
+            // Create new ID
+            if(data.allItems[type].length > 0){
+                ID  = data.allItems[type][data.allItems[type].length -1].id + 1;
+            } else{
+                ID = 0;
+            }
+            
+            
+            // Create new item based on 'inc' or 'exp' type
+            if(type === 'inc'){
+                newItem = new Income(ID, description, value);                
+            } else if(type === 'exp'){
+                newItem = new Expense(ID, description, value);
+            }
+            
+            // Push into the data structure 'allItems'
+            data.allItems[type].push(newItem);                  // adds a new item at the END of an array
+            
+            // Return the new element
+            return newItem;
+        },
+        
+        testing: function(){
+            console.log(data);
         }
     }
 })();
@@ -44,7 +76,7 @@ var UIController = (function(){
    return {
        getInput: function(){
            return {
-               type: document.querySelector(DOMstrings.inputValue).value,            // returns inc or exp
+               type: document.querySelector(DOMstrings.inputType).value,                   // returns inc or exp
                description: document.querySelector(DOMstrings.inputDescription).value,
                value: document.querySelector(DOMstrings.inputValue).value
            };
@@ -82,12 +114,14 @@ var controller = (function(budgetCtrl, UICtrl){
     }
     
     var controlAddItem = function(){
-    
+        var input, newItem;
+        
         // 1. Get the field input data (from the UI Controller and its public method 'getInput')
         var input = UICtrl.getInput();
         console.log(input);
         
         // 2. Add item to the budget controller
+        newItem = budgetCtrl.addItem(input.type, input.description, input.value);
         
         // 3. Add item to the UI
         
