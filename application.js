@@ -42,13 +42,15 @@ var budgetController = (function(){
             
             // Create new item based on 'inc' or 'exp' type
             if(type === 'inc'){
-                newItem = new Income(ID, description, value);                
+                newItem = new Income(ID, description, value); 
+                
             } else if(type === 'exp'){
                 newItem = new Expense(ID, description, value);
             }
             
             // Push into the data structure 'allItems'
             data.allItems[type].push(newItem);                  // adds a new item at the END of an array
+            data.totals[type] += value;
             
             // Return the new element
             return newItem;
@@ -80,7 +82,7 @@ var UIController = (function(){
            return {
                type: document.querySelector(DOMstrings.inputType).value,                   // returns inc or exp
                description: document.querySelector(DOMstrings.inputDescription).value,
-               value: document.querySelector(DOMstrings.inputValue).value
+               value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
            };
        },
        
@@ -107,14 +109,28 @@ var UIController = (function(){
        
        getDOMstrings: function(){
             return DOMstrings;
+       },
+       
+       clearFields: function(){
+           var fields, fieldsArray;
+           fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);           // this returns a LIST instead of ARRAY, so we need to convert it to ARRAY
+           
+           fieldsArray = Array.prototype.slice.call(fields);  // will use SLICE to return an ARRAY, which returns copy of the array, BUT we need to use SLICE method by using CALL method, and passing the fields variable into it, so then it become the THIS variable and it will work fine
+           
+           // current - current element of the Array being processed 
+           // indexNumber - current index of the Array being processed
+           // array - the actual array, to which we have access
+           
+           fieldsArray.forEach(function(current, indexNumber, array){
+               current.value = "";  // current's element VALUE
+               
+           });
+           
+           fieldsArray[0].focus();
        }
+       
    };
     
-    
-    
-    
-    
-
 })();
 
 
@@ -138,23 +154,36 @@ var controller = (function(budgetCtrl, UICtrl){
         });
     }
     
+    var updateBudget = function(){
+        // 1. Calculate the budget
+        //budgetCtrl.
+        // 2. Return the budget
+        
+        
+        // 3. Display the budget on the UI  
+    };
+    
     var controlAddItem = function(){
         var input, newItem;
         
         // 1. Get the field input data (from the UI Controller and its public method 'getInput')
         input = UICtrl.getInput();
-        console.log(input);
         
-        // 2. Add item to the budget controller
-        newItem = budgetCtrl.addItem(input.type, input.description, input.value);
-        
-        // 3. Add item to the UI
-        UICtrl.addListItem(newItem, input.type);
-        
-        // 4. Calculate the budget
-        
-        // 5. Display the budget on the UI
-}
+        if(input.description !== "" && !isNaN(input.value) && input.value > 0){
+            // 2. Add item to the budget controller
+            newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+
+            // 3. Add item to the UI
+            UICtrl.addListItem(newItem, input.type);
+
+            // 4. Clear fields
+            UICtrl.clearFields();
+
+            // 5. Calculate and update budget
+            updateBudget();
+        }
+                    
+    };
 
     return {
         init: function(){
