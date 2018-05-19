@@ -44,11 +44,15 @@ The repository consists of:
 - ...
 
 ## 5. What I Have Learned
-- declaring variables, writing functions and general syntax in JavaScript
-- improved knowledge on JavaScript DOM operations
-- data type coercion in JavaScript
-- increased CSS styling skill
-- increased HTML knowledge
+- how to use the module pattern (involving Closures and Immediately Invoked Function Expressions (IIFE))
+- practice of encapsulation and separation of concerns
+- how to set up event listeners for keypress events
+- how to use event objects
+- creating the 'initialisation' function (to make the app structure better)
+- how to avoid conflicts in a data structure
+- use of innerAdjacentHTML, querySelectorAll
+- converting a list to an array
+- foreach method ( to loop over an array)
 
 
 ## 6. Future Development 
