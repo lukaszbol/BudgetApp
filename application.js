@@ -113,7 +113,8 @@ var UIController = (function(){
         budgetValue: '.budget__value',
         incomeValue: '.budget__income--value',
         expensesValue: '.budget__expenses--value',
-        expensesPercentage: '.budget__expenses--percentage'        
+        expensesPercentage: '.budget__expenses--percentage',
+        container : '.container clearfix'
     };
     
     // returning PUBLIC object:
@@ -206,6 +207,8 @@ var controller = (function(budgetCtrl, UICtrl){
               controlAddItem();
           }
         });
+        
+        document.querySelector(DOM.container).addEventListener('click', ctrlDelItem);
     }
     
     var updateBudget = function(){
@@ -241,6 +244,10 @@ var controller = (function(budgetCtrl, UICtrl){
                     
     };
 
+    var ctrlDelItem = function(event){      // to find what the target element is
+        console.log(event.target);
+    };
+    
     return {
         init: function(){
             console.log('Application has started...');
